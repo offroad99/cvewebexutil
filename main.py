@@ -26,5 +26,5 @@ if __name__ == "__main__":
 
     cveLogger.initlogging(sys.argv)
     cveLogger.mylogger(f'{cveLogger.lineno()} About to begin web server on port 5001')
-    app.run(host="0.0.0.0", port=5001, debug=True, 
+    app.run(host="0.0.0.0", port=443, debug=True, 
         ssl_context=('/etc/letsencrypt/live/cveautomation.com/fullchain.pem', '/etc/letsencrypt/live/cveautomation.com/privkey.pem'))
