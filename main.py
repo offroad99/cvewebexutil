@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    print(f'got here with request: {request.json}')
     return render_template("login.html")
 
 
@@ -17,6 +18,7 @@ def index():
 def login_dnac():
 
     # Webhook Receiver
+    print(f'got here with request: {request.json}')
     webhook_data = request.json
     #pprint(webhook_data)
     #webhook_data = json.dumps(webhook_data)
