@@ -7,8 +7,8 @@ import login
 def getWebexUserToken(code):
     PARAMS = {
                 "grant_type" : "authorization_code", 
-                "client_id" : clientId,
-                "client_secret" : clientSecret,
+                "client_id" : login.clientId,
+                "client_secret" : login.clientSecret,
                 "code" : code,
                 "redirect_uri" : "oauth.cveautomation.com"
             }
@@ -17,7 +17,7 @@ def getWebexUserToken(code):
     HEADERS = {
             'content-type': "application/x-www-form-urlencoded",
         }
-    cveLogger.mylogger(f'{cveLogger.lineno()} About to create global pool with payload: {PAYLOAD}')
+    cveLogger.mylogger(f'{cveLogger.lineno()} About to request token with params: {PARAMS}')
     response = requests.post(url=URL, headers=HEADERS, verify=False, params=PARAMS)
     cveLogger.mylogger(f'{cveLogger.lineno()} response.text: {response.text}')
     if response.ok:
