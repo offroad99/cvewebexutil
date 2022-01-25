@@ -10,7 +10,7 @@ def getWebexUserToken(code):
                 "client_id" : login.clientId,
                 "client_secret" : login.clientSecret,
                 "code" : code,
-                "redirect_uri" : "oauth.cveautomation.com"
+                "redirect_uri" : login.redirectUri
             }
     
     URL = f'https://webexapis.com/v1/access_token'
