@@ -34,9 +34,14 @@ def index():
 
     return render_template("index.html.jinja")
 
+@app.route("/removeUser", methods=["GET"])
+def removeUserRender():
+    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request view_args: {request.query_string}')
+    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request referrer: {request.referrer}')   
+    return render_template("removeUser.html.jinja")
 
-@app.route("/", methods=["POST"])
-def login_dnac():
+@app.route("/removeUser", methods=["POST"])
+def removeUser():
 
     # Webhook Receiver
     cveLogger.mylogger(f'{cveLogger.lineno()} got here with request: {request.json}')
