@@ -32,7 +32,7 @@ def index():
             
         return "Auth failed. Review logs"
 
-    return render_template("index.html")
+    return render_template("index.html.jinja")
 
 
 @app.route("/", methods=["POST"])
