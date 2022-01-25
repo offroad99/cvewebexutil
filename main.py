@@ -28,10 +28,11 @@ def index():
             expiresIn = codeInfo[1]
             refreshToken = codeInfo[2]
             redirectUri = codeInfo[3]
-            return "Successfully received auth"
+            return render_template("removeUser.html.jinja")
+            
         return "Auth failed. Review logs"
 
-    return "Error in request", 400
+    return render_template("index.html")
 
 
 @app.route("/", methods=["POST"])
