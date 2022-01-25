@@ -11,6 +11,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     
+    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request view_args: {request.query_string}')
     cveLogger.mylogger(f'{cveLogger.lineno()} got here with request data: {request.data}')
     cveLogger.mylogger(f'{cveLogger.lineno()} got here with request view_args: {request.view_args}')
     cveLogger.mylogger(f'{cveLogger.lineno()} got here with request referrer: {request.referrer}')
