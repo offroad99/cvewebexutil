@@ -22,7 +22,7 @@ def index():
     state = request.args.get('state')
 
     if code and state:
-        codeInfo = getUserToken(code)
+        codeInfo = getUserToken.getWebexUserToken(code)
         if codeInfo:
             accessToken = codeInfo[0]
             expiresIn = codeInfo[1]
