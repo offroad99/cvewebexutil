@@ -17,20 +17,17 @@
                                 <div class="panel panel--loose panel--raised base-margin-bottom">
                                     <h6>Please provide the email address of the individual to remove</h6>
                                     <form action="/removeUser" method="POST" name="removeUser">
-                                        <input type="hidden" name="code" value=accessStuff>
-                                        <input type="hidden" name="code2" value="{{ accessStuff }}">
+                                        <input type="hidden" name="code" value="{{ accessStuff }}">
                                         User Email Address: <input type="text" name="emailAddress">
                                         <br><br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                            <button type= "submit" class="btn btn--secondary">Remove</button>
+                                            </div>  
+                                        </div>                                                       
                                     </form>
-                                </div>  
-                            </div>                               
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                    <button type= "submit" class="btn btn--secondary">Remove</button>
-                                </form>
-                                <br>
-                            </div>                            
+                                </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
