@@ -25,10 +25,11 @@ def index():
         codeInfo = getUserToken.getWebexUserToken(code)
         if codeInfo:
             accessToken = codeInfo[0]
+            cveLogger.mylogger(f'{cveLogger.lineno()} Access Token: {accessToken}')
             expiresIn = codeInfo[1]
             refreshToken = codeInfo[2]
             redirectUri = codeInfo[3]
-            return render_template("removeUser.html.jinja")
+            return render_template("removeUser.html.jinja", accessStuff = accessToken)
             
         return "Auth failed. Review logs"
 
