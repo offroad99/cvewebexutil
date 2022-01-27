@@ -5,6 +5,7 @@ import datetime
 import cveLogger
 import sys
 import getUserToken
+import listUserMemberships
 
 clientId = ''
 clientSecret = ''
@@ -45,10 +46,9 @@ def removeUserRender():
 def removeUser():
 
     # Webhook Receiver
-    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request: {request.json}')
-    webhook_data = request.json
-    #pprint(webhook_data)
-    #webhook_data = json.dumps(webhook_data)
+    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request: {request.args}')
+    return "Stil under development"
+
 
 
 if __name__ == "__main__":
