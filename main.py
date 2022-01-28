@@ -5,7 +5,7 @@ import datetime
 import cveLogger
 import sys
 import getUserToken
-import listUserMemberships
+from listUserMemberships import listUserMemberships
 import random, string
 
 clientId = ''
@@ -54,7 +54,7 @@ def removeUserRender():
 def removeUserStatus():
 
     # Webhook Receiver
-    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request: {request.args}')
+    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request: {request.user_agent_class}')
     
     if request.method == "POST":
         cveLogger.mylogger(f'{cveLogger.lineno()} request method is post')
@@ -69,7 +69,10 @@ def removeUserStatus():
 
     cveLogger.mylogger(f'{cveLogger.lineno()} request method is not post') 
     if 'emailAddress' in session:
-        return app.response_class(listUserMemberships.listUserMemberships(session['accessToken'], session['emailAddress'], ''), mimetype="text/plain")
+        cveLogger.mylogger(f'{cveLogger.lineno()} Calling listUserMemberships with email address: {session["emailAddress"]}') 
+        return app.response_class(listUserMemberships(session['accessToken'], session['emailAddress'], ''), mimetype="text/plain")
+    
+    return index()
 
 
 
