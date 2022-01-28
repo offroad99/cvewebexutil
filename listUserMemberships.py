@@ -10,8 +10,10 @@ def listUserMemberships(ACCESS_TOKEN, email, roomName, delete = False):
         if foundPerson is not None:
             #print(foundPerson.get("personDisplayName"))
             cveLogger.mylogger(f'{cveLogger.lineno()} Found {foundPerson.get("personDisplayName")} in room {room.get("title")}')
+            yield f'User {foundPerson.get("personDisplayName")} found in room {room.get("title")}'
             if delete:
                 deleteMembership.deleteMembership(ACCESS_TOKEN, foundPerson.get("id"))
+    return None
 
 
 if __name__ == "__main__":
@@ -26,4 +28,5 @@ if __name__ == "__main__":
     ACCESS_TOKEN = input('bearer token: ')
     emailAddress = input('eMail Address: ')
     roomName = input('Room name or pattern: ')
-    listUserMemberships(ACCESS_TOKEN, emailAddress, roomName, Action)
+    for foundInRoom in listUserMemberships(ACCESS_TOKEN, emailAddress, roomName, Action):
+        print(f'Iterating: {foundInRoom}')
