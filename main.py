@@ -13,8 +13,7 @@ clientSecret = ''
 
 app = Flask(__name__)
 app.secret_key = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(18))
- 
-print(output_string)
+
 
 
 @app.route('/')
