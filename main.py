@@ -75,7 +75,7 @@ def removeUserStatus():
     cveLogger.mylogger(f'{cveLogger.lineno()} request method is not post') 
     if 'emailAddress' in session:
         cveLogger.mylogger(f'{cveLogger.lineno()} Calling listUserMemberships with email address: {session["emailAddress"]}') 
-        return app.response_class(listUserMemberships(session['accessToken'], session['emailAddress'], ''), mimetype="text/plain")
+        return app.response_class(stream_with_context(listUserMemberships(session['accessToken'], session['emailAddress'], '')), mimetype="text/plain")
     
     return index()
 
