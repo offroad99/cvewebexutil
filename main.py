@@ -54,14 +54,19 @@ def removeUserRender():
 def removeUserStatus():
 
     # Webhook Receiver
-    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request: {request.user_agent_class}')
+    cveLogger.mylogger(f'{cveLogger.lineno()} got here with request: {request.user_agent}')
     
     if request.method == "POST":
         cveLogger.mylogger(f'{cveLogger.lineno()} request method is post')
         cveLogger.mylogger(f'{cveLogger.lineno()} Request content type: {request.content_type}')
         if 'accessToken' in session:
             accessToken = session['accessToken']
-            session['emailAddress'] = request.args.get('emailAddress')
+            if request.form.get('emailAddress'):
+                session['emailAddress'] = request.form.get('emailAddress')
+            else:
+                cveLogger.mylogger(f'{cveLogger.lineno()} emailAdress not found')
+                return index()
+
         else:
             return index()
 
