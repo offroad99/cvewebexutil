@@ -1,4 +1,3 @@
-from weakref import ref
 from flask import Flask, json, session, request, Response, render_template, stream_with_context
 import json, sys, requests, re
 import os
@@ -7,11 +6,16 @@ import cveLogger
 import sys
 import getUserToken
 import listUserMemberships
+import random, string
 
 clientId = ''
 clientSecret = ''
 
 app = Flask(__name__)
+app.secret_key = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(18))
+ 
+print(output_string)
+
 
 @app.route('/')
 def index():
