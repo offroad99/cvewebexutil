@@ -39,11 +39,14 @@
             let timeString = d.toLocaleTimeString();
             var messages = theXhr.responseText.split('\n');
             messages.slice(position, -1).forEach(function(value) {
-                latest.textContent = value;  // update the latest value in place
-                // build and append a new item to a list to log all output
-                var item = document.createElement('li');
-                item.textContent = timeString + ' NewData: ' + value;
-                output.appendChild(item);
+                varLocalValue = value.replace(/\s/g, '')
+                if (varLocalValue.length > 1) {
+                    latest.textContent = value;  // update the latest value in place
+                    // build and append a new item to a list to log all output
+                    var item = document.createElement('li');
+                    item.textContent = timeString + ' NewData: ' + value;
+                    output.appendChild(item);
+                }
             });
             position = messages.length - 1;
         }
