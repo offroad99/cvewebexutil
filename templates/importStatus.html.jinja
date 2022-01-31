@@ -1,23 +1,19 @@
 {% extends "base.html.jinja" %}
 {% block content %}
 <div class="col-12 col-lg-9 col-xl-10">
-    <div class="cveSection">
+    <div class="section">
         <div class="row">
             <div class="col-xl-8">
                 <div class="panel panel--loose panel--raised base-margin-bottom">
-                    <h2 class="subtitle">Remove User From Room Status: <span id='startTime'></span></h2>
+                    <h2 class="subtitle">Login</h2>
                     <hr>
-                    <div class="cveSection">
+                    <div class="section">
                         <div class="row">
-                            <p>This is the latest output: <span id="latest"></span></p>
-                            <div class="row">
-                                <p>This is all the output:</p>
-                                <br>
-                                <div class="row">
-                                    <ul id="output"></ul>
-                                </div>
-                            </div>
-                        </div>
+                        <p>This is the latest output: <span id="latest"></span></p>
+                        <br>
+                        <p>This is all the output:</p>
+                        <ul id="output"></ul>
+                        <p>This is raw output: <span id="rawoutput"></span></p>
                     </div>
                 </div>
             </div>
@@ -30,6 +26,12 @@
     document.getElementById("startTime").innerHTML = myStartTime.toLocaleTimeString();
     var latest = document.getElementById('latest');
     var output = document.getElementById('output');
+    var rawoutput = document.getElementById('rawoutput'); 
+    var position = 0;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', "{{ url_for('import_post')}}");
+    xhr.send();
     var position = 0;
 
     function handleNewData(theXhr) {
@@ -42,21 +44,18 @@
             let timeString = d.toLocaleTimeString();
             var messages = theXhr.responseText.split('\n');
             messages.slice(position, -1).forEach(function(value) {
-                varLocalValue = value.replace(/\s/g, '')
-                if (varLocalValue.length > 1) {
-                    latest.textContent = value;  // update the latest value in place
-                    // build and append a new item to a list to log all output
-                    var item = document.createElement('li');
-                    item.textContent = timeString + ': ' + value;
-                    output.appendChild(item);
-                }
+                latest.textContent = value;  // update the latest value in place
+                // build and append a new item to a list to log all output
+                var item = document.createElement('li');
+                item.textContent = timeString + ' NewData: ' + value;
+                output.appendChild(item);
             });
             position = messages.length - 1;
         }
     
     $(document).ready(function(){
             $.ajax({
-                url: "{{ url_for('removeUserStatus')}}",
+                url: "{{ url_for('import_post')}}",
                 method: "get",
                 xhr: function(){
                     // get the native XmlHttpRequest object
@@ -70,12 +69,13 @@
                 }
             })
             .always (function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
-                //alert('status: ' + textStatus, 'jqXHROrData:' + jqXHROrData);
+                var item = document.createElement('li');
+                item.textContent = jqXHROrData;
+                output.appendChild(item);
+                alert('status: ' + textStatus, 'jqXHROrData:' + jqXHROrData);
             })
             .done (function(data, textStatus, jqXHR) { 
-                handleNewData(jqXHR);
-                latest.textContent = "Done";
-                alert("Success: " + textStatus);
+                alert("Success: " + data); 
             })
         });
 </script>

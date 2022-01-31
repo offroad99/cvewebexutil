@@ -2814,6 +2814,19 @@ iframe {
   .section + .section {
     padding-top: 0; }
 
+.cveSection {
+  padding-left: 0;
+  padding-right: 0;
+  padding: var(--cui-spacing) 0; }
+  .section:after {
+    display: table !important; }
+  .section.section--compressed {
+    padding: var(--cui-spacing-qtr) 0; }
+  .section.section--loose {
+    padding: var(--cui-spacing-dbl) 0; }
+  .section + .section {
+    padding-top: 0; }
+}
 @font-face {
   font-family: "cui-font";
   src: url("../fonts/cui-font.eot");
