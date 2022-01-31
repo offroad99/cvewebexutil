@@ -2815,7 +2815,6 @@ iframe {
     padding-top: 0; }
 
 .cveSection {
-  padding-left: 0;
   padding-right: 0;
   padding: var(--cui-spacing) 0; }
   .section:after {
@@ -2824,8 +2823,8 @@ iframe {
     padding: var(--cui-spacing-qtr) 0; }
   .section.section--loose {
     padding: var(--cui-spacing-dbl) 0; }
-  .section + .section {
-    padding-top: 0; }
+  .section + .cveSection {
+    padding-top: 10; }
 }
 @font-face {
   font-family: "cui-font";
