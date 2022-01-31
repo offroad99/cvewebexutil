@@ -78,12 +78,14 @@ def removeUserStatus():
     
     def myIter():
         yield ' '*1024 + '\n'
-        for thething in listUserMemberships(session['accessToken'], session['roomPattern'], ''):
+        for thething in listUserMemberships(session['accessToken'], session['roomPattern']):
             yield thething + '\n'
         return None
 
     if 'emailAddress' in session:
-        cveLogger.mylogger(f'{cveLogger.lineno()} Calling listUserMemberships with email address: {session["emailAddress"]}') 
+        cveLogger.mylogger(
+            f'{cveLogger.lineno()} Calling listUserMemberships with email address: {session["emailAddress"]} and match pattern: {session["roomPattern"]}'
+            ) 
         return app.response_class(stream_with_context(myIter()), mimetype="text/plain")
     
     return index()
