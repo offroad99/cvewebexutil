@@ -1,0 +1,125 @@
+<html> 
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+{% block content %}
+    <body>
+        <div class='stream_content'>
+            <div class="col-12 col-lg-9 col-xl-10">
+                <div class="section">
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <div class="panel panel--loose panel--raised base-margin-bottom">
+                                <h2 class="subtitle">Begin: <span id='startTime'></span></h2>
+                                <hr>
+                                <div class="section">
+                                    <div class="row">
+                                        <p>This is the latest output: <span id="latest"></span></p>
+                                        <br>
+                                        <p>This is all the output:</p>
+                                        <ul id="output"></ul>
+                                        <p>This is raw output: <span id="rawoutput"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        const myStartTime = new Date(); 
+        document.getElementById("startTime").innerHTML = myStartTime.toLocaleTimeString();
+        var latest = document.getElementById('latest');
+        var output = document.getElementById('output');
+        var rawoutput = document.getElementById('rawoutput'); 
+        var position = 0;
+
+        function handleNewData(theXhr) {
+            // the response text include the entire response so far
+            // split the messages, then take the messages that haven't been handled yet
+            // position tracks how many messages have been handled
+            // messages end with a newline, so split will always show one extra empty message at the end
+            console.log("running handlenewdata with position: " + position)
+            const d = new Date();
+            let timeString = d.toLocaleTimeString();
+            var messages = theXhr.responseText.split('\n');
+            messages.slice(position, -1).forEach(function(value) {
+                latest.textContent = value;  // update the latest value in place
+                // build and append a new item to a list to log all output
+                var item = document.createElement('li');
+                item.textContent = timeString + ' NewData: ' + value;
+                output.appendChild(item);
+            });
+            position = messages.length - 1;
+        }
+
+        $(document).ready(function(){
+            $.ajax({
+                url: "/get_stream",
+                method: "get",
+                xhr: function(){
+                    // get the native XmlHttpRequest object
+                    var myXhr = $.ajaxSettings.xhr();
+                    // set the onprogress event handler
+                    myXhr.onprogress = function(){ 
+                        console.log('about to call handlenewdata from onprogress');
+                        handleNewData(myXhr); 
+                    };
+                    return myXhr
+                }
+            })
+            .always (function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
+                var item = document.createElement('li');
+                item.textContent = jqXHROrData;
+                output.appendChild(item);
+                alert('status: ' + textStatus, 'jqXHROrData:' + jqXHROrData);
+            })
+            .done (function(data, textStatus, jqXHR) { 
+                alert("Success: " + data); 
+            })
+        });
+    ////new effort here
+    /*var onProgressCount = 0
+    var xhr = new XMLHttpRequest(), 
+            method = 'GET', 
+            url = '{{ url_for('streamed_response') }}';
+
+    xhr.open(method, url, true);
+    xhr.onprogress = function() {
+        const d = new Date();
+        let timeString = d.toLocaleTimeString();
+        onProgressCount++;
+        console.log("onprogress function is called: " + onProgressCount);
+        var messages = xhr.responseText.split('\n');
+        messages.slice(position, -1).forEach(function(value) {
+            latest.textContent = value;  // update the latest value in place
+            // build and append a new item to a list to log all output
+            var item = document.createElement('li');
+            item.textContent = timeString + ' Progress: ' + value;
+            output.appendChild(item);
+        });
+        position = messages.length - 1;
+    }
+    
+    //xhr.open('GET', '{{ url_for('streamed_response') }}');
+    xhr.send();
+    */
+    /*
+    var timer;
+    timer = setInterval(function() {
+        // check the response for new data
+        handleNewData();
+        // stop checking once the response has ended
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            console.log("complete http request")
+            clearInterval(timer);
+            latest.textContent = 'Done';
+        }
+    }, 1000);
+    */
+   </script>
+   {% endblock %}
+</html>
