@@ -67,7 +67,9 @@
                 //alert('status: ' + textStatus, 'jqXHROrData:' + jqXHROrData);
             })
             .done (function(data, textStatus, jqXHR) { 
-                alert("Success: " + textStatus); 
+                handleNewData(jqXHR);
+                latest.textContent = "Done";
+                alert("Success: " + textStatus);
             })
         });
 </script>
