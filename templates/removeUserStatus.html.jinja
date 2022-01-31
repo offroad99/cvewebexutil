@@ -30,11 +30,6 @@
     var rawoutput = document.getElementById('rawoutput'); 
     var position = 0;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', "{{ url_for('removeUserStatus')}}");
-    xhr.send();
-    var position = 0;
-
     function handleNewData(theXhr) {
             // the response text include the entire response so far
             // split the messages, then take the messages that haven't been handled yet
@@ -56,7 +51,7 @@
     
     $(document).ready(function(){
             $.ajax({
-                url: "{{ url_for('import_post')}}",
+                url: "{{ url_for('removeUserStatus')}}",
                 method: "get",
                 xhr: function(){
                     // get the native XmlHttpRequest object
