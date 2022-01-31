@@ -64,6 +64,7 @@ def removeUserStatus():
             accessToken = session['accessToken']
             if request.form.get('emailAddress'):
                 session['emailAddress'] = request.form.get('emailAddress')
+                session['roomPattern'] = request.form.get('roomPattern')
             else:
                 cveLogger.mylogger(f'{cveLogger.lineno()} emailAdress not found')
                 return index()
@@ -76,9 +77,9 @@ def removeUserStatus():
     cveLogger.mylogger(f'{cveLogger.lineno()} request method is not post') 
     
     def myIter():
-        yield ' '*1024
-        for thething in listUserMemberships(session['accessToken'], session['emailAddress'], ''):
-            yield thething
+        yield ' '*1024 + '\n'
+        for thething in listUserMemberships(session['accessToken'], session['roomPattern'], ''):
+            yield thething + '\n'
         return None
 
     if 'emailAddress' in session:
