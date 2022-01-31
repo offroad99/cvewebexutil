@@ -22,42 +22,62 @@
 </div>
 
 <script>
+    const myStartTime = new Date(); 
+    document.getElementById("startTime").innerHTML = myStartTime.toLocaleTimeString();
     var latest = document.getElementById('latest');
     var output = document.getElementById('output');
     var rawoutput = document.getElementById('rawoutput'); 
+    var position = 0;
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', "{{ url_for('removeUserStatus')}}");
+    xhr.open('GET', "{{ url_for('import_post')}}");
     xhr.send();
     var position = 0;
 
-    function handleNewData() {
-        // the response text include the entire response so far
-        // split the messages, then take the messages that haven't been handled yet
-        // position tracks how many messages have been handled
-        // messages end with a newline, so split will always show one extra empty message at the end
-        var messages = xhr.responseText.split('\n');
-        rawoutput.textContent = messages; 
-        messages.slice(position, messages.length).forEach(function(value) {
-            latest.textContent = value;  // update the latest value in place
-            // build and append a new item to a list to log all output
-            var item = document.createElement('li');
-            item.textContent = value;
-            output.appendChild(item);
-        });
-        position = messages.length - 1;
-    }
-
-    var timer;
-    timer = setInterval(function() {
-        // check the response for new data
-        handleNewData();
-        // stop checking once the response has ended
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            clearInterval(timer);
-            latest.textContent = 'Done';
+    function handleNewData(theXhr) {
+            // the response text include the entire response so far
+            // split the messages, then take the messages that haven't been handled yet
+            // position tracks how many messages have been handled
+            // messages end with a newline, so split will always show one extra empty message at the end
+            console.log("running handlenewdata with position: " + position)
+            const d = new Date();
+            let timeString = d.toLocaleTimeString();
+            var messages = theXhr.responseText.split('\n');
+            messages.slice(position, -1).forEach(function(value) {
+                latest.textContent = value;  // update the latest value in place
+                // build and append a new item to a list to log all output
+                var item = document.createElement('li');
+                item.textContent = timeString + ' NewData: ' + value;
+                output.appendChild(item);
+            });
+            position = messages.length - 1;
         }
-    }, 1000);
+    
+    $(document).ready(function(){
+            $.ajax({
+                url: "{{ url_for('import_post')}}",
+                method: "get",
+                xhr: function(){
+                    // get the native XmlHttpRequest object
+                    var myXhr = $.ajaxSettings.xhr();
+                    // set the onprogress event handler
+                    myXhr.onprogress = function(){ 
+                        console.log('about to call handlenewdata from onprogress');
+                        handleNewData(myXhr); 
+                    };
+                    return myXhr
+                }
+            })
+            .always (function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
+                var item = document.createElement('li');
+                item.textContent = jqXHROrData;
+                output.appendChild(item);
+                alert('status: ' + textStatus, 'jqXHROrData:' + jqXHROrData);
+            })
+            .done (function(data, textStatus, jqXHR) { 
+                alert("Success: " + data); 
+            })
+        });
 </script>
 
 {% endblock %}
