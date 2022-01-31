@@ -25,11 +25,12 @@ def getRoomMember(ACCESS_TOKEN, roomId, email = None, name = None):
                 URL = linkheader
         else:
             linkheader = None
-        for person in jsonresp.get('items'):
-            if email.lower() in person.get('personEmail').lower():
-                cveLogger.mylogger(f'{cveLogger.lineno()} Found person: {person.get("personDisplayName")}')
-                cveLogger.mylogger(f'{cveLogger.lineno()} {person}')
-                return person
+        if jsonresp.get('items'):
+            for person in jsonresp['items']:
+                if email.lower() in person.get('personEmail').lower():
+                    cveLogger.mylogger(f'{cveLogger.lineno()} Found person: {person.get("personDisplayName")}')
+                    cveLogger.mylogger(f'{cveLogger.lineno()} {person}')
+                    return person
         return None
 
 
