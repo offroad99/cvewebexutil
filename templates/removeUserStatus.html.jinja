@@ -13,9 +13,6 @@
                             <div class="row">
                                 <p>This is all the output:</p>
                                 <ul id="output"></ul>
-                                <div class="row">
-                                    <p>This is raw output: <span id="rawoutput"></span></p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -30,7 +27,6 @@
     document.getElementById("startTime").innerHTML = myStartTime.toLocaleTimeString();
     var latest = document.getElementById('latest');
     var output = document.getElementById('output');
-    var rawoutput = document.getElementById('rawoutput'); 
     var position = 0;
 
     function handleNewData(theXhr) {
@@ -68,13 +64,10 @@
                 }
             })
             .always (function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
-                var item = document.createElement('li');
-                item.textContent = jqXHROrData;
-                output.appendChild(item);
-                alert('status: ' + textStatus, 'jqXHROrData:' + jqXHROrData);
+                //alert('status: ' + textStatus, 'jqXHROrData:' + jqXHROrData);
             })
             .done (function(data, textStatus, jqXHR) { 
-                alert("Success: " + data); 
+                alert("Success: " + textStatus); 
             })
         });
 </script>
