@@ -616,6 +616,12 @@ body.cui[data-theme="dark"] .switch {
   margin-right: -10px;
   margin-left: -10px; }
 
+.cveRow {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 10px; }
+
 .no-gutters {
   margin-right: 0;
   margin-left: 0; }
