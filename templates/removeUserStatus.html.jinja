@@ -39,7 +39,7 @@
             // split the messages, then take the messages that haven't been handled yet
             // position tracks how many messages have been handled
             // messages end with a newline, so split will always show one extra empty message at the end
-            console.log("running handlenewdata with position: " + position)
+            //console.log("running handlenewdata with position: " + position)
             const d = new Date();
             let timeString = d.toLocaleTimeString();
             var messages = theXhr.responseText.split('\n');
@@ -65,7 +65,7 @@
                     var myXhr = $.ajaxSettings.xhr();
                     // set the onprogress event handler
                     myXhr.onprogress = function(){ 
-                        console.log('about to call handlenewdata from onprogress');
+                        //console.log('about to call handlenewdata from onprogress');
                         handleNewData(myXhr); 
                     };
                     return myXhr
