@@ -62,11 +62,12 @@ def removeUserStatus():
         cveLogger.mylogger(f'{cveLogger.lineno()} Request content type: {request.content_type}')
         if 'accessToken' in session:
             accessToken = session['accessToken']
-            if request.form.get('emailAddress'):
+            emailPattern = re.compile(r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$")
+            if emailPattern.fullmatch(request.form.get('emailAddress')):
                 session['emailAddress'] = request.form.get('emailAddress')
                 session['roomPattern'] = request.form.get('roomPattern')
             else:
-                cveLogger.mylogger(f'{cveLogger.lineno()} emailAdress not found')
+                cveLogger.mylogger(f'{cveLogger.lineno()} emailAdress not found or not valid')
                 return index()
 
         else:
