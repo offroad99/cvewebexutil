@@ -15,9 +15,9 @@
                             <!-- Middle Rail -->
                                 <div class="panel panel--loose panel--raised base-margin-bottom">
                                     <h6>Please provide the email address of the individual to remove</h6>
-                                    <form action="{{url_for('removeUserStatus')}}" method="POST" name="removeUser">
+                                    <form action="{{url_for('removeUserStatus')}}" method="POST" name="removeUser" id="removeUser">
                                         <input type="hidden" name="code" value="{{ accessStuff }}">
-                                        User Email Address: <input type="text" name="emailAddress">
+                                        User Email Address: <input type="text" name="emailAddress" id="emailAddress">
                                         <br><br>
                                         Space or Room Names to Match: <input type="text" name="roomPattern">
                                         <div class="row">
