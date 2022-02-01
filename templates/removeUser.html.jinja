@@ -22,7 +22,7 @@
                                         Space or Room Names to Match: <input type="text" name="roomPattern">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <button type= "submit" class="btn btn--secondary" onclick="ValidateEmail(document.removeUser.emailAddress)">Remove</button>
+                                                <button type= "submit" class="btn btn--secondary">Remove</button>
                                             </div>  
                                         </div>                                                       
                                     </form>
@@ -38,10 +38,14 @@
 
 <script>
 
+    document.getElementById('removeUser').onsubmit = function() {
+        return ValidateEmail(document.getElementById('emailAddress'));
+    }
+
     function ValidateEmail(inputText){
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if(inputText.value.match(mailformat)) {
-            console.log("valid email address entered")
+            console.log("valid email address entered");
             return true;
         }
         else {
